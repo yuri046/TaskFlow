@@ -1,16 +1,14 @@
 package com.taskflow.DTO;
 
-import com.taskflow.Entity.TarefaEntity;
-
 import java.util.List;
 
-public class UsuarioDTO {
+public class UserDTO {
     private String nome;
     private String email;
     private String senha;
-    private List<TarefaDTO> tarefas;
+    private List<TaskDTO> tarefas;
 
-    public UsuarioDTO(String nome, String email, String senha, List<TarefaDTO> tarefas) {
+    public UserDTO(String nome, String email, String senha, List<TaskDTO> tarefas) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -33,11 +31,11 @@ public class UsuarioDTO {
         this.email = email;
     }
 
-    public List<TarefaDTO> getTarefas() {
+    public List<TaskDTO> getTarefas() {
         return tarefas;
     }
 
-    public void setTarefas(List<TarefaDTO> tarefas) {
+    public void setTarefas(List<TaskDTO> tarefas) {
         this.tarefas = tarefas;
     }
 

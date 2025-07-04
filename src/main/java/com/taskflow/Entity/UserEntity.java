@@ -3,7 +3,7 @@ package com.taskflow.Entity;
 import jakarta.persistence.*;
 
 @Entity
-public class UsuarioEntity {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -14,11 +14,11 @@ public class UsuarioEntity {
     @Column(nullable = false)
     private String senha;
 
-    public UsuarioEntity(){
+    public UserEntity(){
 
     }
 
-    public UsuarioEntity( String nome, String email, String senha) {
+    public UserEntity(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
