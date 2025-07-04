@@ -1,43 +1,20 @@
-package com.taskflow.Entity;
-
-import jakarta.persistence.*;
+package com.taskflow.DTO;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-@Entity
-public class TarefaEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(nullable = false)
+public class TarefaDTO {
     private String titulo;
     private String descricao;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataConclusao;
-    private boolean concluida = false;
+    private boolean concluida;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private UsuarioEntity usuario;
-
-    public TarefaEntity() {
-    }
-
-    public TarefaEntity(String titulo, String descricao) {
+    public TarefaDTO(String titulo, String descricao, LocalDateTime dataCriacao, LocalDateTime dataConclusao, boolean concluida) {
         this.titulo = titulo;
         this.descricao = descricao;
-        this.dataCriacao = LocalDateTime.now();
-        this.concluida = false;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+        this.dataCriacao = dataCriacao;
+        this.dataConclusao = dataConclusao;
+        this.concluida = concluida;
     }
 
     public String getTitulo() {
@@ -80,13 +57,3 @@ public class TarefaEntity {
         this.concluida = concluida;
     }
 }
-
-
-
-
-
-
-
-
-
-
