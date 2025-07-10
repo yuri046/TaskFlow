@@ -3,24 +3,24 @@ package com.taskflow.DTO;
 import java.util.List;
 
 public class UserDTO {
-    private String nome;
+    private String name;
     private String email;
-    private String senha;
-    private List<TaskDTO> tarefas;
+    private String password;
+    private List<TaskDTO> tasks;
 
-    public UserDTO(String nome, String email, String senha, List<TaskDTO> tarefas) {
-        this.nome = nome;
+    public UserDTO(String name, String email, String password, List<TaskDTO> tasks) {
+        this.name = name;
         this.email = email;
-        this.senha = senha;
-        this.tarefas = tarefas;
+        this.password = password;
+        this.tasks = tasks;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String nome) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -31,19 +31,19 @@ public class UserDTO {
         this.email = email;
     }
 
-    public List<TaskDTO> getTarefas() {
-        return tarefas;
+    public List<TaskDTO> getTasks() {
+        return tasks;
     }
 
     public void setTarefas(List<TaskDTO> tarefas) {
-        this.tarefas = tarefas;
+        this.tasks = tasks;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setSenha(String password) {
+        this.password = password;
     }
 }

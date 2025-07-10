@@ -2,7 +2,7 @@ package com.taskflow.Utils;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-public class HashSenha {
+public class HashPassword {
     public static String generateHash(String senha ){
         return BCrypt.hashpw(senha,BCrypt.gensalt(4));
     }

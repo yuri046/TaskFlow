@@ -8,20 +8,20 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(nullable = false)
-    private String nome;
+    private String name;
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
-    private String senha;
+    private String password;
 
     public UserEntity(){
 
     }
 
-    public UserEntity(String nome, String email, String senha) {
-        this.nome = nome;
+    public UserEntity(String name, String email, String password) {
+        this.name = name;
         this.email = email;
-        this.senha = senha;
+        this.password = password;
     }
 
     public long getId() {
@@ -32,12 +32,12 @@ public class UserEntity {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -48,12 +48,12 @@ public class UserEntity {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 

@@ -4,7 +4,7 @@ import com.taskflow.DTO.UserDTO;
 import com.taskflow.Entity.UserEntity;
 import com.taskflow.Error.ResourceNotFoundException;
 import com.taskflow.Repository.UserRepository;
-import com.taskflow.Utils.HashSenha;
+import com.taskflow.Services.UserServices;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManager;
 
@@ -17,15 +17,16 @@ public class UserController {
 
     public void createUser(Context ctx){
         UserDTO dto = ctx.bodyAsClass(UserDTO.class);
-        UserEntity newUser = new UserEntity(
-                dto.getNome(),
-                dto.getEmail(),
-                HashSenha.generateHash(dto.getSenha()));
+        UserEntity newUser = new UserEntity();
+        UserServices userServices = new UserServices();
+
+        userServices.validateCreation(dto);
+        userServices.convertToEntity(dto, newUser);
 
         UserRepository repo = new UserRepository(em);
         repo.save(newUser);
 
-        ctx.status(200).result("Usuario criado com sucesso!");
+        ctx.status(201).result("Usuario criado com sucesso!");
     }
 
     public void updateUser(Context ctx){
@@ -33,27 +34,13 @@ public class UserController {
         UserDTO dto = ctx.bodyAsClass(UserDTO.class);
 
         UserRepository repo = new UserRepository(em);
-        UserEntity user;
+        UserEntity user = new UserEntity();
+        UserServices userServices = new UserServices();
 
-        try{
-            user = repo.findById(id);
-        } catch (ResourceNotFoundException e){
-            ctx.status(404).result(e.getMessage());
-            return;
-        }
+        userServices.findUserById(user, repo, id, ctx);
 
-
-        if(dto.getNome() != null && !dto.getNome().isBlank()){
-            user.setNome(dto.getNome());
-        }
-
-        if (dto.getEmail() != null && !dto.getEmail().isBlank()){
-            user.setEmail(dto.getEmail());
-        }
-
-        if(dto.getSenha() != null && !dto.getSenha().isBlank()){
-            user.setSenha(HashSenha.generateHash(dto.getSenha()));
-        }
+        userServices.validateUpdate(dto);
+        userServices.convertToEntity(dto, user);
 
         repo.update(user);
 
@@ -65,16 +52,24 @@ public class UserController {
         long id = Long.parseLong(ctx.pathParam("id"));
 
         UserRepository repo = new UserRepository(em);
-        UserEntity user;
+        UserEntity user = new UserEntity();
+        UserServices userServices = new UserServices();
 
-        try{
-            user = repo.findById(id);
-        } catch (ResourceNotFoundException e){
-            ctx.status(404).result(e.getMessage());
-            return;
-        }
+        userServices.findUserById(user, repo, id, ctx);
+
 
         repo.delete(user);
         ctx.status(204).result("Usuario excluido com sucesso");
     }
 }
+
+
+
+
+
+
+
+
+
+
+

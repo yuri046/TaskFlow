@@ -22,6 +22,8 @@ public class TaskController {
 
         UserEntity user;
         UserRepository userRepo = new UserRepository(em);
+        TaskRepository taskRepo = new TaskRepository(em);
+
 
         try{
             user = userRepo.findById(id);
@@ -31,13 +33,13 @@ public class TaskController {
         }
 
         TaskEntity newTask = new TaskEntity(
-                dto.getTitulo(),
-                dto.getDescricao()
+                dto.getTitle(),
+                dto.getDescription()
         );
 
         newTask.setUsuario(user);
 
-        TaskRepository taskRepo = new TaskRepository(em);
+
         taskRepo.save(newTask);
 
 

@@ -3,50 +3,50 @@ package com.taskflow.DTO;
 import java.time.LocalDateTime;
 
 public class TaskDTO {
-    private String titulo;
-    private String descricao;
-    private LocalDateTime dataCriacao;
-    private LocalDateTime dataConclusao;
+    private String title;
+    private String description;
+    private LocalDateTime creationDate;
+    private LocalDateTime conclusionDate;
     private boolean concluida;
 
-    public TaskDTO(String titulo, String descricao, LocalDateTime dataCriacao, LocalDateTime dataConclusao, boolean concluida) {
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.dataCriacao = dataCriacao;
-        this.dataConclusao = dataConclusao;
+    public TaskDTO(String title, String description, LocalDateTime creationDate, LocalDateTime conclusionDate, boolean concluida) {
+        this.title = title;
+        this.description = description;
+        this.creationDate = creationDate;
+        this.conclusionDate = conclusionDate;
         this.concluida = concluida;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String titulo) {
+        this.title = title;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
-    public void setDataCriacao(LocalDateTime dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = this.creationDate;
     }
 
-    public LocalDateTime getDataConclusao() {
-        return dataConclusao;
+    public LocalDateTime getConclusionDate() {
+        return conclusionDate;
     }
 
-    public void setDataConclusao(LocalDateTime dataConclusao) {
-        this.dataConclusao = dataConclusao;
+    public void setConclusionDate(LocalDateTime conclusionDate) {
+        this.conclusionDate = conclusionDate;
     }
 
     public boolean isConcluida() {
