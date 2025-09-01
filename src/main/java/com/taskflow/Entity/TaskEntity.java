@@ -18,8 +18,8 @@ public class TaskEntity {
     private LocalDateTime conclusionDate;
     private boolean concluded = false;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, updatable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false, unique = true, updatable = false)
     private UserEntity user;
 
     public TaskEntity() {
