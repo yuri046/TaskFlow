@@ -14,11 +14,13 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation("io.javalin:javalin:6.7.0")
     implementation 'org.hibernate.orm:hibernate-core:6.4.4.Final'
-    implementation 'org.xerial:sqlite-jdbc:3.45.1.0'
+    implementation 'org.postgresql:postgresql:42.6.0'
     implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
     implementation 'org.mindrot:jbcrypt:0.4'
     implementation 'com.auth0:java-jwt:4.5.0'
-    implementation 'io.github.cdimascio:java-dotenv:6.4.0'
+    implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+    implementation("org.slf4j:slf4j-simple:2.0.16")
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2'
 }
 
 test {

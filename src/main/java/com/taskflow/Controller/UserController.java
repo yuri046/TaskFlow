@@ -4,6 +4,9 @@ import com.taskflow.DTO.UserDTO;
 import com.taskflow.Services.UserServices;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManager;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 
 public class UserController {
@@ -13,35 +16,26 @@ public class UserController {
         this.em = em;
     }
 
-    /*
-    *  Futuro metodo de login
-    *  implementar depois de configurar o toke JWT
-    * */
     public void getUser(Context ctx){
-
-    }
-
-    public void createUser(Context ctx){
-        UserDTO dto = ctx.bodyAsClass(UserDTO.class);
+        long id = Long.parseLong(Objects.requireNonNull(ctx.attribute("userId")));
         UserServices services = new UserServices(em);
-        services.createUser(dto);
-        ctx.status(201).result("Usuario criado com sucesso!");
+        UserDTO dto = services.getUserById(id);
+        ctx.status(200).json(dto);
     }
 
     public void updateUser(Context ctx){
-        long id = Long.parseLong(ctx.pathParam("id"));
+        long id = Long.parseLong(Objects.requireNonNull(ctx.attribute("userId")));
         UserDTO dto = ctx.bodyAsClass(UserDTO.class);
         UserServices services = new UserServices(em);
-        services.updateUser(dto, id);
-        ctx.status(200).result("Usuario atualizado com sucesso!");
-
+        UserDTO newDto = services.updateUser(dto, id);
+        ctx.status(200).json(newDto);
     }
 
     public void deleteUser(Context ctx){
-        long id = Long.parseLong(ctx.pathParam("id"));
+        long id = Long.parseLong(Objects.requireNonNull(ctx.attribute("userId")));
         UserServices services = new UserServices(em);
         services.deleteUser(id);
-        ctx.status(204).result("Usuario excluido com sucesso");
+        ctx.status(204).result("Usuário excluido com sucesso");
     }
 }
 

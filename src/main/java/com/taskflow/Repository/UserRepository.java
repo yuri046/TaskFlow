@@ -3,6 +3,8 @@ package com.taskflow.Repository;
 import com.taskflow.Entity.UserEntity;
 import com.taskflow.Error.ResourceNotFoundException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -51,15 +53,13 @@ public class UserRepository {
     }
 
     // busca usuario pelo email
-    public UserEntity findByEmail(String email){
-        UserEntity user = em.find(UserEntity.class, email);
+    public UserEntity findByEmail(String email) {
+        TypedQuery<UserEntity> query = em.createQuery(
+                "SELECT u FROM UserEntity u WHERE u.email = :email", UserEntity.class
+        );
+        query.setParameter("email", email);
 
-        if (user == null){
-            throw new ResourceNotFoundException("Usuario nao encontrado");
-        }
+        return query.getSingleResult();
 
-        return user;
     }
-
-
 }

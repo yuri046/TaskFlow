@@ -23,7 +23,7 @@ public class TaskRepository {
 
     //Atualiza tarefa
     public void update(TaskEntity task){
-        em.getTransaction();
+        em.getTransaction().begin();
         em.merge(task);
         em.getTransaction().commit();
     }
@@ -37,7 +37,7 @@ public class TaskRepository {
 
     // retorna todas as tarefas
     public List<TaskEntity> findAll(UserEntity user){
-        return em.createQuery("SELECT t FROM UserEntity WHERE t.user :user", TaskEntity.class)
+        return em.createQuery("SELECT t FROM TaskEntity t WHERE t.user = :user", TaskEntity.class)
                 .setParameter("user", user)
                 .getResultList();
     }

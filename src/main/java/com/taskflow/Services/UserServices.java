@@ -1,11 +1,16 @@
 package com.taskflow.Services;
 
+import com.taskflow.DTO.LoginRequestDTO;
+import com.taskflow.DTO.RegisterDTO;
+import com.taskflow.DTO.TaskListDTO;
 import com.taskflow.DTO.UserDTO;
 import com.taskflow.Entity.UserEntity;
 import com.taskflow.Error.InvalidField;
+import com.taskflow.Error.ResourceNotFoundException;
 import com.taskflow.Repository.UserRepository;
 import com.taskflow.Utils.HashPassword;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 
 
 import static com.taskflow.Utils.StringUtils.isNotBlank;
@@ -17,19 +22,40 @@ public class UserServices {
         this.repo = new UserRepository(em);
     }
 
-    public void createUser(UserDTO dto){
+    public void createUser(RegisterDTO dto){
         validateCreation(dto);
         UserEntity newUser = new UserEntity();
-
         convertToEntity(dto, newUser);
         repo.save(newUser);
     }
 
-    public void updateUser(UserDTO dto, long id){
+    public UserDTO getUser(LoginRequestDTO login) {
+        UserEntity user = repo.findByEmail(login.getEmail());
+        if (user == null || !HashPassword.checkPassword(login.getPassword(), user.getPassword())) {
+            throw new ResourceNotFoundException("Credenciais inválidas");
+        }
+
+        UserDTO dto = new UserDTO();
+        convertToDto(user, dto);
+
+        return dto;
+    }
+
+    public UserDTO getUserById(long id){
+        UserEntity user = repo.findById(id);
+        UserDTO dto = new UserDTO();
+        convertToDto(user, dto);
+
+        return dto;
+    }
+
+    public UserDTO updateUser(UserDTO dto, long id){
         UserEntity user = repo.findById(id);
         validateUpdate(dto);
         convertToEntity(dto, user);
         repo.update(user);
+        convertToDto(user, dto);
+        return dto;
     }
 
     public void deleteUser(long id){
@@ -38,7 +64,7 @@ public class UserServices {
     }
 
 
-    private void validateCreation(UserDTO userDTO){
+    private void validateCreation(RegisterDTO userDTO){
         boolean hasEmail = isNotBlank(userDTO.getEmail());
         boolean hasName = isNotBlank(userDTO.getName());
         boolean hasPassword = isNotBlank(userDTO.getPassword());
@@ -49,7 +75,7 @@ public class UserServices {
         if(!hasName){
             throw new InvalidField("O campo nome é obrigatório!");
         }
-        if (!hasPassword){
+        if (!hasPassword || !validatePasswordFormat(userDTO.getPassword())) {
             throw new InvalidField("O campo senha é obrigatório e deve ter um formato válido!");
         }
     }
@@ -59,6 +85,22 @@ public class UserServices {
      *  para uma entity que será salva no banco de dados
      */
     private void convertToEntity(UserDTO userDTO, UserEntity userEntity){
+        boolean hasEmail = isNotBlank(userDTO.getEmail());
+        boolean hasName = isNotBlank(userDTO.getName());
+        boolean hasPassword = isNotBlank(userDTO.getPassword()) && validatePasswordFormat(userDTO.getPassword());
+
+        if (hasEmail){
+            userEntity.setEmail(userDTO.getEmail());
+        }
+        if (hasName){
+            userEntity.setName(userDTO.getName());
+        }
+        if (hasPassword){
+            userEntity.setPassword(HashPassword.generateHash(userDTO.getPassword()));
+        }
+    }
+
+    private void convertToEntity(RegisterDTO userDTO, UserEntity userEntity){
         boolean hasEmail = isNotBlank(userDTO.getEmail());
         boolean hasName = isNotBlank(userDTO.getName());
         boolean hasPassword = isNotBlank(userDTO.getPassword()) && validatePasswordFormat(userDTO.getPassword());
@@ -95,13 +137,11 @@ public class UserServices {
         boolean hasName = isNotBlank(user.getName());
         boolean hasPassword = isNotBlank(user.getPassword());
 
+        dto.setId(user.getId());
         if(hasEmail){dto.setEmail(user.getEmail());}
         if(hasName){dto.setName(user.getName());}
-        if(hasPassword){dto.setSenha(user.getPassword());}
-
-
+        if(hasPassword){dto.setPassword(user.getPassword());}
     }
-
 
 }
 

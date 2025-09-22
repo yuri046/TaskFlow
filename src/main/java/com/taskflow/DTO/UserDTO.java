@@ -1,25 +1,34 @@
 package com.taskflow.DTO;
 
-import java.util.List;
-
 public class UserDTO {
+    private long id;
     private String name;
     private String email;
     private String password;
-    private List<TaskDTO> tasks;
+    private TaskListDTO tasks;
 
-    public UserDTO(String name, String email, String password, List<TaskDTO> tasks) {
+    public UserDTO(){}
+    public UserDTO(long id,String name, String email, String password, TaskListDTO tasks) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.tasks = tasks;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
-    public void setName(String nome) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -31,19 +40,19 @@ public class UserDTO {
         this.email = email;
     }
 
-    public List<TaskDTO> getTasks() {
-        return tasks;
-    }
-
-    public void setTarefas(List<TaskDTO> tarefas) {
-        this.tasks = tasks;
-    }
-
     public String getPassword() {
         return password;
     }
 
-    public void setSenha(String password) {
+    public void setPassword(String password) {
         this.password = password;
+    }
+
+    public TaskListDTO getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(TaskListDTO tasks) {
+        this.tasks = tasks;
     }
 }

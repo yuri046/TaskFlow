@@ -1,37 +1,15 @@
-package com.taskflow.Entity;
+package com.taskflow.DTO;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "users")
-public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private long id;
-    @Column(nullable = false)
+public class RegisterDTO {
     private String name;
-    @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
     private String password;
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public UserEntity(){
-
-    }
-
-    public UserEntity(String name, String email, String password) {
+    public RegisterDTO(){}
+    public RegisterDTO(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public String getName() {
@@ -57,6 +35,5 @@ public class UserEntity {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
 }

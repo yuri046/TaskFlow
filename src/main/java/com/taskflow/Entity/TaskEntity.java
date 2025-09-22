@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "tasks")
 public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +20,11 @@ public class TaskEntity {
     private boolean concluded = false;
 
     @ManyToOne(optional = false)
-    @JoinColumn(nullable = false, unique = true, updatable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    public TaskEntity() {
-    }
+
+    public TaskEntity() {}
 
     public TaskEntity(String title, String description) {
         this.title = title;
