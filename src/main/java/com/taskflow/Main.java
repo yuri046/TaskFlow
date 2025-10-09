@@ -13,11 +13,12 @@ import jakarta.persistence.EntityManager;
 
 public class Main {
     public static void main(String[] args) {
+        int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "7000"));
         Javalin app = Javalin.create(config -> {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());   // <- suporte para LocalDate/LocalDateTime
             config.jsonMapper(new JavalinJackson());
-        }).start(7000);
+        }).start(port);
         EntityManager em = JpaUtil.getEntityManager();
 
         AuthRoutes.Configure(app, em);

@@ -2,7 +2,7 @@ package com.taskflow.Services;
 
 import com.taskflow.DTO.LoginRequestDTO;
 import com.taskflow.DTO.RegisterDTO;
-import com.taskflow.DTO.TaskListDTO;
+
 import com.taskflow.DTO.UserDTO;
 import com.taskflow.Entity.UserEntity;
 import com.taskflow.Error.InvalidField;
@@ -10,7 +10,6 @@ import com.taskflow.Error.ResourceNotFoundException;
 import com.taskflow.Repository.UserRepository;
 import com.taskflow.Utils.HashPassword;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceException;
 
 
 import static com.taskflow.Utils.StringUtils.isNotBlank;
