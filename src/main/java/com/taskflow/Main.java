@@ -16,7 +16,7 @@ public class Main {
         int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "7000"));
         Javalin app = Javalin.create(config -> {
             ObjectMapper mapper = new ObjectMapper();
-            mapper.registerModule(new JavaTimeModule());   // <- suporte para LocalDate/LocalDateTime
+            mapper.registerModule(new JavaTimeModule());
             config.jsonMapper(new JavalinJackson());
         }).start(port);
         EntityManager em = JpaUtil.getEntityManager();
