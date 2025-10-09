@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'com.taskflow'
@@ -12,6 +14,7 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+
     implementation("io.javalin:javalin:6.7.0")
     implementation 'org.hibernate.orm:hibernate-core:6.4.4.Final'
     implementation 'org.postgresql:postgresql:42.6.0'
@@ -21,6 +24,18 @@ dependencies {
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
     implementation("org.slf4j:slf4j-simple:2.0.16")
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2'
+}
+
+application {
+    mainClass = 'com.taskflow.Main'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': application.mainClass
+        )
+    }
 }
 
 test {

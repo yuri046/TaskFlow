@@ -10,6 +10,7 @@ public class UserRoutes {
         UserController userController = new UserController(em);
         JwtMiddleware middleware = new JwtMiddleware();
 
+        // Proteção de rota
         app.before("/users", middleware);
         app.before("/users/*", middleware);
 
