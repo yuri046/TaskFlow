@@ -72,7 +72,7 @@ Site: https://taskflow-u543.onrender.com/
 
 
 ### 8. Excluir tarefa
-**Endpoint:** `/tasks{taskId}`
+**Endpoint:** `/tasks/{taskId}`
 **Método:** `DELETE`
 
 <img width="848" height="395" alt="image" src="https://github.com/user-attachments/assets/6d69817d-c0b1-45c9-a001-f055cf6524d5" />
