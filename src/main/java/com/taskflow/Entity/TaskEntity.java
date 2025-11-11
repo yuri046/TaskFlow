@@ -1,6 +1,7 @@
 package com.taskflow.Entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +20,7 @@ public class TaskEntity {
     private LocalDateTime conclusionDate;
     private boolean concluded = false;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 

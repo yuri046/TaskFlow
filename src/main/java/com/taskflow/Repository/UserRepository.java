@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
+
 import java.util.List;
 
 public class UserRepository {
@@ -38,7 +39,7 @@ public class UserRepository {
 
     //Retorna todos os usuarios
     public List<UserEntity> findAll(){
-        return em.createNamedQuery("SELECT u FROM UsuarioEntity u", UserEntity.class).getResultList();
+        return em.createQuery("SELECT u FROM UserEntity u", UserEntity.class).getResultList();
     }
 
     // busca usuario pelo ID

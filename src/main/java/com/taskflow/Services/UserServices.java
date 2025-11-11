@@ -36,7 +36,6 @@ public class UserServices {
 
         UserDTO dto = new UserDTO();
         convertToDto(user, dto);
-
         return dto;
     }
 
@@ -58,8 +57,13 @@ public class UserServices {
     }
 
     public void deleteUser(long id){
-        UserEntity user = repo.findById(id);
-        repo.delete(user);
+        try {
+            UserEntity user = repo.findById(id);
+            repo.delete(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
