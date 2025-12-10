@@ -16,7 +16,10 @@ public class JwtMiddleware implements Handler {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new UnauthorizedResponse("Token ausente ou inválido");
         }
-
+        if ("OPTIONS".equalsIgnoreCase(String.valueOf(ctx.method()))) {
+            ctx.status(204);
+            return;
+        }
         String token = authHeader.replace("Bearer ", "");
         String userId = jwtServices.validateToken(token);
 
