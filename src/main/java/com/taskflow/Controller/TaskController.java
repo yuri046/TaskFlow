@@ -44,7 +44,7 @@ public class TaskController {
 
         TaskServices services = new TaskServices(em);
         TaskDTO newDto = services.updateTask(dto, userId, taskId);
-        ctx.json(newDto).status(200).result("Tarefa atualizada com sucesso");
+        ctx.json(newDto).status(200);
     }
 
     public void deleteTask(Context ctx){
