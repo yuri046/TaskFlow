@@ -78,6 +78,7 @@ public class TaskServices {
         boolean hasTitle = isNotBlank(dto.getTitle());
         boolean hasDescription = isNotBlank(dto.getDescription());
 
+
         if (hasTitle){
             task.setTitle(dto.getTitle());
         }
@@ -111,18 +112,17 @@ public class TaskServices {
     private void validateUpdate(TaskDTO dto){
         boolean hasTitle = isNotBlank(dto.getTitle());
         boolean hasDescription = isNotBlank((dto.getDescription()));
+        boolean isConcluded = dto.isConcluded();
 
-        if(!hasTitle && !hasDescription && dto.getConclusionDate() == null){
+        if(!hasTitle && !hasDescription && !isConcluded){
             throw new InvalidField("Pelo menos um dos campos deve estar preenchido!");
         }
     }
 
-    /*
-    *
-    * */
     private void updateConclusionStatus(TaskEntity task, TaskDTO dto){
         if(dto.isConcluded() != task.isConcluded()){
             task.setConcluded(dto.isConcluded());
+            task.setConclusionDate(LocalDateTime.now());
         }
     }
 
