@@ -15,13 +15,27 @@ import jakarta.persistence.EntityManager;
 public class Main {
     public static void main(String[] args) {
         int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "7000"));
+
         Javalin app = Javalin.create(config -> {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
             config.jsonMapper(new JavalinJackson());
 
-            config.bundledPlugins.enableCors(cors-> cors.addRule(CorsPluginConfig.CorsRule::anyHost));
+            config.bundledPlugins.enableCors(cors -> {
+                cors.addRule(it -> {
+                    it.allowHost("https://taskflow046.netlify.app");
+                    it.allowHost("http://localhost:5173");
+                });
+            });
         }).start(port);
+
+        app.options("/*", ctx -> {
+            ctx.header("Access-Control-Allow-Origin", "https://taskflow046.netlify.app");
+            ctx.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+            ctx.header("Access-Control-Allow-Headers", "Authorization,Content-Type");
+            ctx.status(200);
+        });
+
         EntityManager em = JpaUtil.getEntityManager();
 
         AuthRoutes.Configure(app, em);
