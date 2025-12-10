@@ -22,18 +22,18 @@ public class Main {
             config.jsonMapper(new JavalinJackson());
 
             config.bundledPlugins.enableCors(cors -> {
-                cors.addRule(it -> {
-                    it.allowHost("https://taskflow046.netlify.app");
-                    it.allowHost("http://localhost:5173");
-                });
+                cors.addRule(CorsPluginConfig.CorsRule::anyHost);
             });
         }).start(port);
 
+        app.before(ctx -> {
+            ctx.header("Access-Control-Allow-Origin", "*");
+            ctx.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            ctx.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
+        });
+
         app.options("/*", ctx -> {
-            ctx.header("Access-Control-Allow-Origin", "https://taskflow046.netlify.app");
-            ctx.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-            ctx.header("Access-Control-Allow-Headers", "Authorization,Content-Type");
-            ctx.status(200);
+            ctx.status(204);
         });
 
         EntityManager em = JpaUtil.getEntityManager();
