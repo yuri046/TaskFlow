@@ -10,16 +10,18 @@ public class JwtMiddleware implements Handler {
     private final JwtServices jwtServices = new JwtServices();
 
     @Override
-    public void handle(Context ctx) throws Exception {
+    public void handle(Context ctx) {
+
+        if ("OPTIONS".equalsIgnoreCase(ctx.method().toString())) {
+            return;
+        }
+
         String authHeader = ctx.header("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new UnauthorizedResponse("Token ausente ou inválido");
         }
-        if ("OPTIONS".equalsIgnoreCase(String.valueOf(ctx.method()))) {
-            ctx.status(204);
-            return;
-        }
+
         String token = authHeader.replace("Bearer ", "");
         String userId = jwtServices.validateToken(token);
 
@@ -27,7 +29,6 @@ public class JwtMiddleware implements Handler {
             throw new UnauthorizedResponse("Token inválido ou expirado");
         }
 
-        // Armazena o userId no contexto, para ser usado nos controllers
         ctx.attribute("userId", userId);
     }
 }
